@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<style>
+  :root {
+    --top-bar-height: 30px;
+  }
+
+  html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .top-bar {
+    height: var(--top-bar-height);
+    -ms-overflow-style: scrollbar;
+    -webkit-app-region: drag;
+    background-color: gray;
+  }
+
+  .title {
+    float: left;
+    margin: 5px;
+    color: rgb(233, 231, 231);
+  }
+
+  .quit {
+    --normal-color: rgb(116, 116, 116);
+    --hover-color: rgb(75, 75, 75);
+    --press-color: rgb(32, 32, 32);
+    width: 40px;
+    height: var(--top-bar-height);
+    font-size: 15px;
+    text-align: center;
+    float: right;
+    padding: 4px;
+    color: rgb(255, 41, 41);
+    background-color: var(--normal-color);
+    -webkit-app-region: no-drag;
+  }
+
+  .digit-container {
+    display: grid;
+    width: 100%;
+    height: calc(100% - var(--top-bar-height));
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+</style>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+  </head>
+  <script>
+    var style
+    var quit
+
+    console.log("This is the console output.")
+
+    function enterquit() {
+      quit.style.backgroundColor = style.getPropertyValue('--hover-color')
+    }
+
+    function outquit() {
+      quit.style.backgroundColor = style.getPropertyValue('--normal-color')
+    }
+
+    function downquit() {
+      quit.style.backgroundColor = style.getPropertyValue('--press-color')
+    }
+
+    function upquit() {
+      quit.style.backgroundColor = style.getPropertyValue('--normal-color')
+    }
+
+    function clickquit() {
+      const {ipcRenderer} = require('electron')
+      ipcRenderer.send('close-me')
+    }
+  </script>
+  <body>
+    <nav class="top-bar">
+      <p class="title">Calculator</p>
+      <div id="quit" class="quit" onmouseenter="enterquit();" onmouseout="outquit();" onmousedown="downquit();" onmouseup="upquit();" onClick="clickquit();">X</div>
+    </nav>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <div class="digit-container">
+      <button type="button" div class="grid-item">1</button>
+      <button type="button" div class="grid-item">2</button>
+      <button type="button" div class="grid-item">3</button>
+      <button type="button" div class="grid-item">4</button>
+      <button type="button" div class="grid-item">5</button>
+      <button type="button" div class="grid-item">6</button>
+      <button type="button" div class="grid-item">7</button>
+      <button type="button" div class="grid-item">8</button>
+      <button type="button" div class="grid-item">9</button>
+    </div>
+    <script>
+      require('../renderer.js')
+      function getStyle(style) {
+        var element = document.getElementById(style)
+        return window.getComputedStyle(element)
+      }
+
+      style = getStyle('quit')
+      quit = document.getElementById("quit")
+
+      console.log("This is still the console output.")
+    </script>
+  </body>
+</html>
