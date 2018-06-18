@@ -1,4 +1,5 @@
 const {app, BrowserWindow, ipcMain} = require("electron")
+const path = require('path')
 
 // Paths
 const settingspath = "./settings.json"
@@ -34,7 +35,8 @@ function createWindow () {
         width: 300,
         height: 500,
         frame: false,
-        resizable: settings.debug
+        resizable: settings.debug,
+        icon: path.join(__dirname, 'assets/icons/png/64x64.png')
     })
 
     // and load the index.html of the app.
