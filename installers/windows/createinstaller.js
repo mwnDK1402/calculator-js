@@ -11,12 +11,13 @@ getInstallerConfig()
 function getInstallerConfig () {
   console.log('creating windows installer')
   const rootPath = path.join('./')
+  console.log(path.resolve(rootPath))
   const outPath = path.join(rootPath, 'release-builds')
 
   return Promise.resolve({
     appDirectory: path.join(outPath, 'calculator-js-win32-ia32/'),
     authors: 'Mathias Wagner Nielsen',
-    noMsi: true,
+    noMsi: false,
     outputDirectory: path.join(outPath, 'windows-installer'),
     exe: 'calculator.exe',
     setupExe: 'CalculatorAppInstaller.exe',
