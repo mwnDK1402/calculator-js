@@ -1,157 +1,17 @@
 <!DOCTYPE html>
-<style>
-  :root {
-    --top-bar-height: 30px;
-  }
-
-  html {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .top-bar {
-    height: var(--top-bar-height);
-    -ms-overflow-style: scrollbar;
-    -webkit-app-region: drag;
-    background-color: gray;
-  }
-
-  .title {
-    float: left;
-    margin: 5px;
-    color: rgb(233, 231, 231);
-  }
-
-  .quit {
-    --normal-color: rgb(116, 116, 116);
-    --hover-color: rgb(75, 75, 75);
-    --press-color: rgb(32, 32, 32);
-    width: 40px;
-    height: var(--top-bar-height);
-    font-size: 15px;
-    text-align: center;
-    float: right;
-    padding: 4px;
-    color: rgb(255, 41, 41);
-    background-color: var(--normal-color);
-    -webkit-app-region: no-drag;
-  }
-
-  #number-display {
-    font-size: 40pt;
-    padding-top: 10%;
-    padding-left: 15%;
-  }
-
-  .digit-container {
-    --size: 70%;
-    display: grid;
-    width: var(--size);
-    height: calc(var(--size) - var(--top-bar-height));
-    position: absolute;
-    top: 52.5%;
-    left: 50%;
-    /* left: 40%; */
-    margin: calc(var(--size) * -0.5) 0 0 calc(var(--size) * -0.5);
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-  }
-
-  .digit-item {
-    font-size: 20pt;
-  }
-</style>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
     <meta charset="UTF-8">
     <title>Calculator</title>
   </head>
-  <script>
-    var style
-    var quit
-
-    function enterquit() {
-      quit.style.backgroundColor = style.getPropertyValue('--hover-color')
-    }
-
-    function outquit() {
-      quit.style.backgroundColor = style.getPropertyValue('--normal-color')
-    }
-
-    function downquit() {
-      quit.style.backgroundColor = style.getPropertyValue('--press-color')
-    }
-
-    function upquit() {
-      quit.style.backgroundColor = style.getPropertyValue('--normal-color')
-    }
-
-    function clickquit() {
-      const {ipcRenderer} = require('electron')
-      ipcRenderer.send('close-me')
-    }
-
-    require('../renderer.js')
-
-    window.addEventListener("load", function() {
-      function getStyle(style) {
-        var element = document.getElementById(style)
-        return window.getComputedStyle(element)
-      }
-
-      style = getStyle('quit')
-      quit = document.getElementById("quit")
-
-      const display = document.getElementById("number-display")
-
-      String.prototype.trunc = String.prototype.trunc ||
-        function(n){
-            return (this.length > n) ? this.substr(0, n) : this;
-        };
-
-      function clipDisplay() {
-        display.innerHTML = display.innerHTML.trunc(3)
-      }
-
-      function concatDigit(digit) {
-        display.innerHTML = +display.innerHTML.concat(digit)
-        clipDisplay()
-      }
-
-      function getEventHandlerFromDigit(digit) {
-        return function() {
-          concatDigit(digit)
-        }
-      }
-
-      function getEventHandlerFromContent(content) {
-        if (isNaN(content)) {
-        }
-        else {
-          return getEventHandlerFromDigit(content)
-        }
-      }
-
-      var items = document.getElementsByClassName("digit-item")
-
-      for (let i = 0; i < items.length; i++) {
-        items[i].addEventListener('click', getEventHandlerFromContent(items[i].innerHTML))
-      }
-    })
-  </script>
+  <script type="text/javascript" src="js/index.js"></script>
   <body>
     <nav class="top-bar">
       <p class="title">Calculator</p>
       <div id="quit" class="quit" onmouseenter="enterquit();" onmouseout="outquit();" onmousedown="downquit();" onmouseup="upquit();" onClick="clickquit();">X</div>
     </nav>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
     <div id="number-display">0</div>
     <div class="digit-container">
       <button type="button" div class="grid-item digit-item" value="click">1</button>

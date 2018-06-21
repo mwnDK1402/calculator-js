@@ -1,0 +1,67 @@
+:root {
+  --top-bar-height: 30px;
+}
+
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.top-bar {
+  height: var(--top-bar-height);
+  -ms-overflow-style: scrollbar;
+  -webkit-app-region: drag;
+  background-color: gray;
+}
+
+.title {
+  float: left;
+  margin: 5px;
+  color: rgb(233, 231, 231);
+}
+
+.quit {
+  --normal-color: rgb(116, 116, 116);
+  --hover-color: rgb(75, 75, 75);
+  --press-color: rgb(32, 32, 32);
+  width: 40px;
+  height: var(--top-bar-height);
+  font-size: 15px;
+  text-align: center;
+  float: right;
+  padding: 4px;
+  color: rgb(255, 41, 41);
+  background-color: var(--normal-color);
+  -webkit-app-region: no-drag;
+}
+
+#number-display {
+  font-size: 40pt;
+  padding-top: 10%;
+  padding-left: 15%;
+}
+
+.digit-container {
+  --size: 70%;
+  display: grid;
+  width: var(--size);
+  height: calc(var(--size) - var(--top-bar-height));
+  position: absolute;
+  top: 52.5%;
+  left: 50%;
+  /* left: 40%; */
+  margin: calc(var(--size) * -0.5) 0 0 calc(var(--size) * -0.5);
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+.digit-item {
+  font-size: 20pt;
+}
