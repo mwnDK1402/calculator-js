@@ -44,12 +44,27 @@
     -webkit-app-region: no-drag;
   }
 
+  #number-display {
+    height: 100%;
+    font-size: 40pt;
+    padding-left: 5%;
+  }
+
   .digit-container {
+    --size: 70%;
     display: grid;
-    width: 100%;
-    height: calc(100% - var(--top-bar-height));
+    width: var(--size);
+    height: calc(var(--size) - var(--top-bar-height));
+    position: absolute;
+    top: 52.5%;
+    left: 40%;
+    margin: calc(var(--size) * -0.5) 0 0 calc(var(--size) * -0.5);
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
+  }
+
+  .digit-item {
+    font-size: 20pt;
   }
 </style>
 <html>
@@ -60,8 +75,6 @@
   <script>
     var style
     var quit
-
-    console.log("This is the console output.")
 
     function enterquit() {
       quit.style.backgroundColor = style.getPropertyValue('--hover-color')
@@ -90,16 +103,19 @@
       <div id="quit" class="quit" onmouseenter="enterquit();" onmouseout="outquit();" onmousedown="downquit();" onmouseup="upquit();" onClick="clickquit();">X</div>
     </nav>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <div id="number-display">
+      <p>0</p>
+    </div>
     <div class="digit-container">
-      <button type="button" div class="grid-item">1</button>
-      <button type="button" div class="grid-item">2</button>
-      <button type="button" div class="grid-item">3</button>
-      <button type="button" div class="grid-item">4</button>
-      <button type="button" div class="grid-item">5</button>
-      <button type="button" div class="grid-item">6</button>
-      <button type="button" div class="grid-item">7</button>
-      <button type="button" div class="grid-item">8</button>
-      <button type="button" div class="grid-item">9</button>
+      <button type="button" div class="grid-item digit-item">1</button>
+      <button type="button" div class="grid-item digit-item">2</button>
+      <button type="button" div class="grid-item digit-item">3</button>
+      <button type="button" div class="grid-item digit-item">4</button>
+      <button type="button" div class="grid-item digit-item">5</button>
+      <button type="button" div class="grid-item digit-item">6</button>
+      <button type="button" div class="grid-item digit-item">7</button>
+      <button type="button" div class="grid-item digit-item">8</button>
+      <button type="button" div class="grid-item digit-item">9</button>
     </div>
     <script>
       require('../renderer.js')
