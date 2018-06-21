@@ -2,8 +2,8 @@ const {app, BrowserWindow, ipcMain} = require("electron")
 const path = require('path')
 
 // Paths
-const settingspath = "./settings.json"
-const appdir = "./app/"
+const settingspath = path.join(__dirname, 'settings.json')
+const indexpath = path.join(__dirname, 'app', 'index.html')
 
 let settings
 
@@ -40,7 +40,7 @@ function createWindow () {
     })
 
     // and load the index.html of the app.
-    win.loadFile(appdir + 'index.html')
+    win.loadFile(indexpath)
 
     // Open the DevTools.
     if (settings.debug)

@@ -19,7 +19,7 @@ function getInstallerConfig () {
     authors: 'Mathias Wagner Nielsen',
     noMsi: false,
     outputDirectory: path.join(outPath, 'windows-installer'),
-    exe: 'calculator.exe',
+    exe: 'calculator-js.exe',
     setupExe: 'CalculatorAppInstaller.exe',
     setupIcon: path.join(rootPath, 'assets', 'icons', 'win', 'icon.ico')
   })
