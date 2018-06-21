@@ -45,9 +45,9 @@
   }
 
   #number-display {
-    height: 100%;
     font-size: 40pt;
-    padding-left: 5%;
+    padding-top: 10%;
+    padding-left: 15%;
   }
 
   .digit-container {
@@ -57,10 +57,11 @@
     height: calc(var(--size) - var(--top-bar-height));
     position: absolute;
     top: 52.5%;
-    left: 40%;
+    left: 50%;
+    /* left: 40%; */
     margin: calc(var(--size) * -0.5) 0 0 calc(var(--size) * -0.5);
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
   }
 
   .digit-item {
@@ -96,29 +97,10 @@
       const {ipcRenderer} = require('electron')
       ipcRenderer.send('close-me')
     }
-  </script>
-  <body>
-    <nav class="top-bar">
-      <p class="title">Calculator</p>
-      <div id="quit" class="quit" onmouseenter="enterquit();" onmouseout="outquit();" onmousedown="downquit();" onmouseup="upquit();" onClick="clickquit();">X</div>
-    </nav>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <div id="number-display">
-      <p>0</p>
-    </div>
-    <div class="digit-container">
-      <button type="button" div class="grid-item digit-item">1</button>
-      <button type="button" div class="grid-item digit-item">2</button>
-      <button type="button" div class="grid-item digit-item">3</button>
-      <button type="button" div class="grid-item digit-item">4</button>
-      <button type="button" div class="grid-item digit-item">5</button>
-      <button type="button" div class="grid-item digit-item">6</button>
-      <button type="button" div class="grid-item digit-item">7</button>
-      <button type="button" div class="grid-item digit-item">8</button>
-      <button type="button" div class="grid-item digit-item">9</button>
-    </div>
-    <script>
-      require('../renderer.js')
+
+    require('../renderer.js')
+
+    window.addEventListener("load", function() {
       function getStyle(style) {
         var element = document.getElementById(style)
         return window.getComputedStyle(element)
@@ -127,7 +109,63 @@
       style = getStyle('quit')
       quit = document.getElementById("quit")
 
-      console.log("This is still the console output.")
-    </script>
+      const display = document.getElementById("number-display")
+
+      String.prototype.trunc = String.prototype.trunc ||
+        function(n){
+            return (this.length > n) ? this.substr(0, n) : this;
+        };
+
+      function clipDisplay() {
+        display.innerHTML = display.innerHTML.trunc(3)
+      }
+
+      function concatDigit(digit) {
+        display.innerHTML = +display.innerHTML.concat(digit)
+        clipDisplay()
+      }
+
+      function getEventHandlerFromDigit(digit) {
+        return function() {
+          concatDigit(digit)
+        }
+      }
+
+      function getEventHandlerFromContent(content) {
+        if (isNaN(content)) {
+        }
+        else {
+          return getEventHandlerFromDigit(content)
+        }
+      }
+
+      var items = document.getElementsByClassName("digit-item")
+
+      for (let i = 0; i < items.length; i++) {
+        items[i].addEventListener('click', getEventHandlerFromContent(items[i].innerHTML))
+      }
+    })
+  </script>
+  <body>
+    <nav class="top-bar">
+      <p class="title">Calculator</p>
+      <div id="quit" class="quit" onmouseenter="enterquit();" onmouseout="outquit();" onmousedown="downquit();" onmouseup="upquit();" onClick="clickquit();">X</div>
+    </nav>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <div id="number-display">0</div>
+    <div class="digit-container">
+      <button type="button" div class="grid-item digit-item" value="click">1</button>
+      <button type="button" div class="grid-item digit-item" value="click">2</button>
+      <button type="button" div class="grid-item digit-item" value="click">3</button>
+      <button type="button" div class="grid-item digit-item" value="click">4</button>
+      <button type="button" div class="grid-item digit-item" value="click">5</button>
+      <button type="button" div class="grid-item digit-item" value="click">6</button>
+      <button type="button" div class="grid-item digit-item" value="click">7</button>
+      <button type="button" div class="grid-item digit-item" value="click">8</button>
+      <button type="button" div class="grid-item digit-item" value="click">9</button>
+      <div></div>
+      <button type="button" div class="grid-item digit-item" value="click">0</button>
+      <div></div>
+    </div>
   </body>
 </html>
