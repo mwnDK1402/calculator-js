@@ -64,3 +64,15 @@ body {
 .digit-item {
   font-size: 20pt;
 }
+
+.operation-container {
+  display: grid;
+  width: 20%;
+  height: calc(60% - var(--top-bar-height));
+  position: absolute;
+  top: 52.5%;
+  left: 101.5%;
+  margin: calc(60% * -0.5) 0 0 calc(60% * -0.5);
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+}
