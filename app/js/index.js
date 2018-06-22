@@ -41,12 +41,22 @@ window.addEventListener("load", function() {
     };
 
   function clipDisplay() {
-    display.innerHTML = display.innerHTML.trunc(3);
+    display.innerHTML = display.innerHTML.trunc(9);
   };
 
   function concatDigit(digit) {
     display.innerHTML = +display.innerHTML.concat(digit);
     clipDisplay();
+  };
+
+  function clearDisplay() {
+    display.innerHTML = 0;
+  };
+
+  function startAdd() {
+  };
+
+  function startSubtract() {
   };
 
   function getEventHandlerFromDigit(digit) {
@@ -57,6 +67,16 @@ window.addEventListener("load", function() {
 
   function getEventHandlerFromContent(content) {
     if (isNaN(content)) {
+      switch (content) {
+        case "C":
+          return clearDisplay;
+      
+        case "+":
+          return startAdd;
+
+        case "-":
+          return startSubtract;
+      }
     }
     else {
       return getEventHandlerFromDigit(content);

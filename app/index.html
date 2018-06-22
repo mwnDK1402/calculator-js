@@ -1,4 +1,17 @@
 <!DOCTYPE html>
+<style>
+  .operation-container {
+    display: grid;
+    width: 20%;
+    height: calc(60% - var(--top-bar-height));
+    position: absolute;
+    top: 52.5%;
+    left: 101.5%;
+    margin: calc(60% * -0.5) 0 0 calc(60% * -0.5);
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+  }
+</style>
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="css/index.css">
@@ -26,6 +39,11 @@
       <div></div>
       <button type="button" div class="grid-item digit-item" value="click">0</button>
       <div></div>
+    </div>
+    <div class="operation-container">
+      <button type="button" div class="grid-item digit-item" value="click">C</button>
+      <button type="button" div class="grid-item digit-item" value="click">+</button>
+      <button type="button" div class="grid-item digit-item" value="click">-</button>
     </div>
   </body>
 </html>
