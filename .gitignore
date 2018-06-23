@@ -2,3 +2,5 @@ node_modules
 release-builds
 settings.json
 Calculator.exe.lnk
+.nyc_output
+coverage
