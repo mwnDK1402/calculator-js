@@ -39,14 +39,38 @@ window.addEventListener("load", function() {
 
   var calc = new Calculator();
 
+  function showCalculation() {
+    display.innerHTML = calc.getCalculationText();
+  }
+
+  function showResult() {
+    display.innerHTML = calc.getResultText();
+  }
+
   function writeDigit(digit) {
     calc.writeDigit(digit);
-    display.innerHTML = calc.getResultText();
+    showCalculation();
   };
 
   function clearDisplay() {
     calc.clear();
-    display.innerHTML = calc.getResultText();
+    showCalculation();
+  };
+
+  function startAdd() {
+    calc.startAdd();
+    showCalculation();
+  }
+
+  function startSubtract() {
+    calc.startSubtract();
+    showCalculation();
+  }
+
+  function calculate() {
+    calc.endOperation();
+    showResult();
+    calc.clear();
   };
 
   function getEventHandlerFromDigit(digit) {
@@ -62,10 +86,13 @@ window.addEventListener("load", function() {
           return clearDisplay;
       
         case "+":
-          return calc.startAdd;
+          return startAdd;
 
         case "-":
-          return calc.startSubtract;
+          return startSubtract;
+
+        case "=":
+          return calculate;
       }
     }
     else
