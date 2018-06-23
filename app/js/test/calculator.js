@@ -28,15 +28,15 @@ describe('Calculator', function() {
     it('should throw when digit is not a digit', function() {
 
       expect(function() { 
-        calc.writeDigit(-1)
+        calc.writeDigit(-1);
       }).throws("must be in range");
 
       expect(function() { 
-        calc.writeDigit(10)
+        calc.writeDigit(10);
       }).throws("must be in range");
 
       expect(function() { 
-        calc.writeDigit()
+        calc.writeDigit();
       }).throws("must be a number");
 
     });
@@ -44,7 +44,7 @@ describe('Calculator', function() {
     it('should contain "1" after being cleared and having 1 written', function() {
 
       calc.clear();
-      calc.writeDigit(1)
+      calc.writeDigit(1);
       const result = calc.getResultText();
   
       expect(result).to.be.equal("1");
