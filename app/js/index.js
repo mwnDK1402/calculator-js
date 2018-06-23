@@ -35,33 +35,23 @@ window.addEventListener("load", function() {
 
   const display = document.getElementById("number-display");
 
-  String.prototype.trunc = String.prototype.trunc ||
-    function(n) {
-      return (this.length > n) ? this.substr(0, n) : this;
-    };
+  const Calculator = require('./js/calculator');
 
-  function clipDisplay() {
-    display.innerHTML = display.innerHTML.trunc(9);
-  };
+  var calc = new Calculator();
 
-  function concatDigit(digit) {
-    display.innerHTML = +display.innerHTML.concat(digit);
-    clipDisplay();
+  function writeDigit(digit) {
+    calc.writeDigit(digit);
+    display.innerHTML = calc.getResultText();
   };
 
   function clearDisplay() {
-    display.innerHTML = 0;
-  };
-
-  function startAdd() {
-  };
-
-  function startSubtract() {
+    calc.clear();
+    display.innerHTML = calc.getResultText();
   };
 
   function getEventHandlerFromDigit(digit) {
     return function() {
-      concatDigit(digit);
+      writeDigit(digit);
     };
   };
 
@@ -72,15 +62,14 @@ window.addEventListener("load", function() {
           return clearDisplay;
       
         case "+":
-          return startAdd;
+          return calc.startAdd;
 
         case "-":
-          return startSubtract;
+          return calc.startSubtract;
       }
     }
-    else {
+    else
       return getEventHandlerFromDigit(content);
-    }
   };
 
   var items = document.getElementsByClassName("digit-item");
