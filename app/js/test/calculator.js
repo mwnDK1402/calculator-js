@@ -71,7 +71,9 @@ describe('Calculator', function() {
       expect(result).to.be.equal(expected);
 
     });
-  
+  });
+
+  describe('operations', function() {
     describe('addition', function() {
       it('should calculate 2 + 2 to be 4', function() {
   
@@ -146,6 +148,28 @@ describe('Calculator', function() {
         const expectedResult = "0";
   
         calc.clear();
+        calc.writeDigit(2);
+        calc.startSubtract();
+        calc.writeDigit(2);
+
+        const calculation = calc.getCalculationText();
+
+        calc.endOperation();
+        
+        const result = calc.getResultText();
+    
+        expect(calculation).to.be.equal(expectedCalculation);
+        expect(result).to.be.equal(expectedResult);
+    
+      });
+
+      it('should calculate -2 - 2 to be -4', function() {
+  
+        const expectedCalculation = "-2 - 2";
+        const expectedResult = "-4";
+  
+        calc.clear();
+        calc.startSubtract();
         calc.writeDigit(2);
         calc.startSubtract();
         calc.writeDigit(2);

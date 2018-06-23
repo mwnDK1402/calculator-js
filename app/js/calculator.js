@@ -42,8 +42,11 @@ Calculator.prototype.startAdd = function() {
 };
 
 Calculator.prototype.startSubtract = function() {
-  if (this.input !== "")
-    this.calculation = this.calculation.concat(" - ");
+  
+  this.calculation = this.input === ""
+    ? "-"
+    : this.calculation.concat(" - ");
+  
   this.endOperation();
   this.operation = operations.Subtraction;
 };
