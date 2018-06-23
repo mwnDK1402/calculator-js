@@ -24,25 +24,43 @@ describe('Calculator', function() {
 
   });
 
-  it('should contain "1" after being cleared and having 1 written', function() {
+  describe('writeDigit(digit)', function() {
+    it('should throw when digit is not a digit', function() {
 
-    calc.clear();
-    calc.writeDigit(1)
-    const result = calc.getResultText();
+      expect(function() { 
+        calc.writeDigit(-1)
+      }).throws("must be in range");
 
-    expect(result).to.be.equal("1");
+      expect(function() { 
+        calc.writeDigit(10)
+      }).throws("must be in range");
 
-  });
+      expect(function() { 
+        calc.writeDigit()
+      }).throws("must be a number");
 
-  it('should not calculate 2 + 2 to be 4 yet', function() {
+    });
 
-    calc.clear();
-    calc.writeDigit(2);
-    calc.startAdd();
-    calc.writeDigit(2);
-    const result = calc.getResultText();
+    it('should contain "1" after being cleared and having 1 written', function() {
 
-    expect(result).to.not.be.equal("4");
-
+      calc.clear();
+      calc.writeDigit(1)
+      const result = calc.getResultText();
+  
+      expect(result).to.be.equal("1");
+  
+    });
+  
+    it('should not calculate 2 + 2 to be 4 yet', function() {
+  
+      calc.clear();
+      calc.writeDigit(2);
+      calc.startAdd();
+      calc.writeDigit(2);
+      const result = calc.getResultText();
+  
+      expect(result).to.not.be.equal("4");
+  
+    });
   });
 });

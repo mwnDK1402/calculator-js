@@ -3,6 +3,12 @@ function Calculator() {
 }
 
 Calculator.prototype.writeDigit = function(digit) {
+  if (isNaN(digit))
+    throw new TypeError("digit must be a number")
+
+  if (digit < 0 || digit > 9)
+    throw new RangeError("digit must be in range [0-9]");
+
   this.value = +this.value.toString().concat(digit);
 };
 
