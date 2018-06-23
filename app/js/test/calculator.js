@@ -229,6 +229,20 @@ describe('Calculator', function() {
         expect(calculation).to.be.equal(expectedCalculation);
         expect(result).to.be.equal(expectedResult);
       });
+
+      it('should show "1 - 2" when pressing "1, +, -, 2"', function() {
+        const expectedCalculation = "1 - 2";
+        
+        calc.clear();
+        calc.writeDigit(1);
+        calc.startAdd();
+        calc.startSubtract();
+        calc.writeDigit(2);
+        
+        const calculation = calc.getCalculationText();
+
+        expect(calculation).to.be.equal(expectedCalculation);
+      })
     });
   });
 });

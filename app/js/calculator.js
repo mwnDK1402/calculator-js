@@ -35,7 +35,7 @@ Calculator.prototype.endOperation = function() {
 };
 
 Calculator.prototype.startAdd = function() {
-  if (this.input !== "")
+  if (this.calculation !== "0")
     this.calculation = this.calculation.concat(" + ");
   this.endOperation();
   this.operation = operations.Addition;
@@ -43,7 +43,7 @@ Calculator.prototype.startAdd = function() {
 
 Calculator.prototype.startSubtract = function() {
   
-  this.calculation = this.input === ""
+  this.calculation = this.calculation === "0"
     ? "-"
     : this.calculation.concat(" - ");
   
