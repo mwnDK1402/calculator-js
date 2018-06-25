@@ -1,5 +1,6 @@
 var expect = require('chai').expect;
 var Calculator = require('../calculator');
+var operations = require('../operationtreenode').operations;
 
 describe('Calculator', function() {
   
@@ -65,7 +66,6 @@ describe('Calculator', function() {
 
       calc.clear();
       calc.writeDigit(1);
-      calc.endOperation();
       const result = calc.getResultText();
   
       expect(result).to.be.equal(expected);
@@ -75,20 +75,32 @@ describe('Calculator', function() {
 
   describe('operations', function() {
     describe('addition', function() {
-      it('should calculate 2 + 2 to be 4', function() {
+      it('should calculate "1" to be 1', function() {
+
+        const expectedCalculation = "1";
+        const expectedResult = "1";
+
+        calc.clear();
+        calc.writeDigit(1);
+        
+        const calculation = calc.getCalculationText();
+        const result = calc.getResultText();
+
+        expect(calculation).to.be.equal(expectedCalculation);
+        expect(result).to.be.equal(expectedResult);
+
+      });
+      it('should calculate "2 + 2" to be 4', function() {
   
         const expectedCalculation = "2 + 2";
         const expectedResult = "4";
   
         calc.clear();
         calc.writeDigit(2);
-        calc.startAdd();
+        calc.startOperation(operations.Addition);
         calc.writeDigit(2);
 
         const calculation = calc.getCalculationText();
-
-        calc.endOperation();
-        
         const result = calc.getResultText();
     
         expect(calculation).to.be.equal(expectedCalculation);
@@ -96,44 +108,38 @@ describe('Calculator', function() {
     
       });
   
-      it('should calculate 2 + 2 + 2 to be 6', function() {
+      it('should calculate "2 + 2 + 2" to be 6', function() {
         
         const expectedCalculation = "2 + 2 + 2";
         const expectedResult = "6";
         
         calc.clear();
         calc.writeDigit(2);
-        calc.startAdd();
+        calc.startOperation(operations.Addition);
         calc.writeDigit(2);
-        calc.startAdd();
+        calc.startOperation(operations.Addition);
         calc.writeDigit(2);
 
-        const calculation = calc.getCalculationText();
-
-        calc.endOperation();
-  
+        const calculation = calc.getCalculationText();  
         const result = calc.getResultText();
     
         expect(calculation).to.be.equal(expectedCalculation);
         expect(result).to.be.equal(expectedResult);
       });
   
-      it('should calculate 29 + 01 to be 30', function() {
+      it('should calculate "29 + 01" (shown as "29 + 1") to be 30', function() {
         
-        const expectedCalculation = "29 + 01";
+        const expectedCalculation = "29 + 1";
         const expectedResult = "30";
         
         calc.clear();
         calc.writeDigit(2);
         calc.writeDigit(9);
-        calc.startAdd();
+        calc.startOperation(operations.Addition);
         calc.writeDigit(0);
         calc.writeDigit(1);
 
         const calculation = calc.getCalculationText();
-
-        calc.endOperation();
-  
         const result = calc.getResultText();
     
         expect(calculation).to.be.equal(expectedCalculation);
@@ -142,20 +148,17 @@ describe('Calculator', function() {
     });
 
     describe('subtraction', function() {
-      it('should calculate 2 - 2 to be 0', function() {
+      it('should calculate "2 - 2" to be 0', function() {
   
         const expectedCalculation = "2 - 2";
         const expectedResult = "0";
   
         calc.clear();
         calc.writeDigit(2);
-        calc.startSubtract();
+        calc.startOperation(operations.Subtraction);
         calc.writeDigit(2);
 
         const calculation = calc.getCalculationText();
-
-        calc.endOperation();
-        
         const result = calc.getResultText();
     
         expect(calculation).to.be.equal(expectedCalculation);
@@ -163,21 +166,18 @@ describe('Calculator', function() {
     
       });
 
-      it('should calculate -2 - 2 to be -4', function() {
+      it('should calculate "-2 - 2" to be -4', function() {
   
         const expectedCalculation = "-2 - 2";
         const expectedResult = "-4";
   
         calc.clear();
-        calc.startSubtract();
+        calc.startOperation(operations.Subtraction);
         calc.writeDigit(2);
-        calc.startSubtract();
+        calc.startOperation(operations.Subtraction);
         calc.writeDigit(2);
 
         const calculation = calc.getCalculationText();
-
-        calc.endOperation();
-        
         const result = calc.getResultText();
     
         expect(calculation).to.be.equal(expectedCalculation);
@@ -185,45 +185,39 @@ describe('Calculator', function() {
     
       });
   
-      it('should calculate 2 - 2 - 2 to be -2', function() {
+      it('should calculate "2 - 2 - 2" to be -2', function() {
         
         const expectedCalculation = "2 - 2 - 2";
         const expectedResult = "-2";
         
         calc.clear();
         calc.writeDigit(2);
-        calc.startSubtract();
+        calc.startOperation(operations.Subtraction);
         calc.writeDigit(2);
-        calc.startSubtract();
+        calc.startOperation(operations.Subtraction);
         calc.writeDigit(2);
 
         const calculation = calc.getCalculationText();
-
-        calc.endOperation();
-  
         const result = calc.getResultText();
   
         expect(calculation).to.be.equal(expectedCalculation);
         expect(result).to.be.equal(expectedResult);
       });
   
-      it('should calculate 29 - 031 to be -2', function() {
+      it('should calculate "29 - 031" (shown as "29 - 31") to be -2', function() {
         
-        const expectedCalculation = "29 - 031";
+        const expectedCalculation = "29 - 31";
         const expectedResult = "-2";
         
         calc.clear();
         calc.writeDigit(2);
         calc.writeDigit(9);
-        calc.startSubtract();
+        calc.startOperation(operations.Subtraction);
         calc.writeDigit(0);
         calc.writeDigit(3);
         calc.writeDigit(1);
 
         const calculation = calc.getCalculationText();
-
-        calc.endOperation();
-  
         const result = calc.getResultText();
     
         expect(calculation).to.be.equal(expectedCalculation);
@@ -235,14 +229,50 @@ describe('Calculator', function() {
         
         calc.clear();
         calc.writeDigit(1);
-        calc.startAdd();
-        calc.startSubtract();
+        calc.startOperation(operations.Addition);
+        calc.startOperation(operations.Subtraction);
         calc.writeDigit(2);
         
         const calculation = calc.getCalculationText();
 
         expect(calculation).to.be.equal(expectedCalculation);
-      })
+      });
+
+      it('should calculate "-" to be 0', function() {
+  
+        const expectedCalculation = "-";
+        const expectedResult = "0";
+  
+        calc.clear();
+        calc.startOperation(operations.Subtraction);
+        
+        const calculation = calc.getCalculationText();
+        const result = calc.getResultText();
+    
+        expect(calculation).to.be.equal(expectedCalculation);
+        expect(result).to.be.equal(expectedResult);
+    
+      });
+    });
+
+    describe('compound', function() {
+      it('should calculate "1 - 2 + 8" to be 7', function() {
+        const expectedCalculation = "1 - 2 + 8";
+        const expectedResult = "7";
+        
+        calc.clear();
+        calc.writeDigit(1);
+        calc.startOperation(operations.Subtraction);
+        calc.writeDigit(2);
+        calc.startOperation(operations.Addition);
+        calc.writeDigit(8);
+        
+        const calculation = calc.getCalculationText();
+        const result = calc.getResultText();
+
+        expect(calculation).to.be.equal(expectedCalculation);
+        expect(result).to.be.equal(expectedResult);
+      });
     });
   });
 });

@@ -34,8 +34,8 @@ window.addEventListener("load", function() {
   quit = document.getElementById("quit");
 
   const display = document.getElementById("number-display");
-
   const Calculator = require('./js/calculator');
+  const operations = require('./js/operationtreenode').operations;
 
   var calc = new Calculator();
 
@@ -58,24 +58,23 @@ window.addEventListener("load", function() {
   };
 
   function startAdd() {
-    calc.startAdd();
+    calc.startOperation(operations.Addition);
     showCalculation();
   }
 
   function startSubtract() {
-    calc.startSubtract();
+    calc.startOperation(operations.Subtraction);
     showCalculation();
   }
 
   function calculate() {
-    calc.endOperation();
     showResult();
     calc.clear();
   };
 
   function getEventHandlerFromDigit(digit) {
     return function() {
-      writeDigit(digit);
+      writeDigit(+digit);
     };
   };
 
